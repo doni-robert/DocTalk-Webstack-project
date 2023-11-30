@@ -1,6 +1,13 @@
 **PROJECT DESCRIPTION**
 
-**COLLABORATORS**
+**FULL-STACK WEBSTACK PORTFOLIO PROJECT - DOCTALK**
+
+**ALX_AFRICA**
+The ALX Holberton Software Engineering programme is a 12-month(70h/week) immersive programme that engages technology enthusiasts and budding software engineers in a variety of programmes across in-demand tech disciplines to prepare them for a global career as a Full-Stack Developer.
+
+**STARTING THE PROJECT**
+
+**AUTHORS**
 
 1.Kennedy Onyango -Frontend Developer- https://github.com/Kennedy826
 
@@ -12,3 +19,5 @@
 
 
 **FRAMEWORK AND LIBRARIES**
+
+**PROJECT LINK**
