@@ -1,16 +1,8 @@
 #!/usr/bin/env python3
-"""
-This module contains the configurations for Flask-SQLAlchemy
-"""
+""" Configuration file """
 
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
 
-class Config(object):
-    """
-    This class contains the configurations for Flask-SQLAlchemy
-    """
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'database.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.environ.get('YOUR_FLASK_SECRET_KEY', 'default_secret_key')
+class Config:
+    """ Configuration class """
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'xyzxyz xyzxyz xyzxyz'
