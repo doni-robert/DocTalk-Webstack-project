@@ -7,5 +7,5 @@ def init_mongodb(app):
     """
     Database initialization
     """
-    # db_uri = app.config['MONGODB_SETTINGS']
-    connect(host='mongodb://localhost:27017/doctalk_db')
+    db_uri = app.config['DB_HOST']
+    connect(host=db_uri)

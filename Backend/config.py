@@ -7,7 +7,4 @@ import os
 class Config:
     """ Configuration class """
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'xyzxyz xyzxyz xyzxyz'
-    MONGODB_SETTINGS = {
-        'db': 'doctalk_db',
-        'host': 'mongodb://localhost:27017/doctalk_db'
-    }
+    DB_HOST = os.environ.get('DB_HOST') or 'mongodb://localhost:27017/doctalk_db'
