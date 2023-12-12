@@ -30,7 +30,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         if form.email.data == 'xhD2U@example.com' and form.password.data == 'password':
-            flash('You\'re logged in!', 'success')
+            flash('You\'re logged in!')
             return redirect(url_for('index'))
         else:
             flash('Login Unsuccessful. Incorrect username or password')
