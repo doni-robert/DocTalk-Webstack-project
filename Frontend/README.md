@@ -1,1 +1,1 @@
-Materials for the frontend develpment.
+Materials for the frontend development.
