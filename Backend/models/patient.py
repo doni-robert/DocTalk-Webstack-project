@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ The Patient module"""
-from user import User
-from doctor import Doctor
+from models.user import User
 from mongoengine import IntField, ListField, ReferenceField
 
 
@@ -9,6 +8,8 @@ class Patient(User):
     """
     The Patient document that inherits from User
     """
+    from models.doctor import Doctor
+    
     patient_number = IntField(required=True)
     doctors = ListField(ReferenceField(Doctor))
 
@@ -19,6 +20,8 @@ class Patient(User):
     
     def add_patient_doctors(self, doctor):
         """Adds a doctor to the list of a patient's doctors """
+        from models.doctor import Doctor
+
         if doctor in Doctor.objects().all():
             self.doctors.append(doctor)
         else:

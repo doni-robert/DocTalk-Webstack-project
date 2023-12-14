@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """ The User module"""
-from doctor import Doctor
-from patient import Patient
 from mongoengine import Document, StringField, EmailField
 
 class User(Document):
@@ -42,6 +40,9 @@ class User(Document):
     
     def get_contacts(self):
         """ Retrieves the relevant contacts for a user"""
+        from models.doctor import Doctor
+        from models.patient import Patient
+
         if isinstance(self, Doctor):
             return self.patients
         
