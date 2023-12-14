@@ -8,10 +8,9 @@ class Doctor(User):
     """
     The Doctor document that inherits from User
     """
-    from models.patient import Patient
 
     staff_number = IntField(required=True)
-    patients = ListField(ReferenceField(Patient))
+    patients = ListField(ReferenceField('Patient'))
 
 
     def get_patients(self):
@@ -21,7 +20,7 @@ class Doctor(User):
     def add_doctor_patients(self, patient):
         """Adds a patient to the list of a doctor's patients """
         from models.patient import Patient
-        
+
         if patient in Patient.objects().all():
             self.patients.append(patient)
         else:

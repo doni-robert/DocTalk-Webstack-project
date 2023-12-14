@@ -8,10 +8,9 @@ class Patient(User):
     """
     The Patient document that inherits from User
     """
-    from models.doctor import Doctor
-    
+
     patient_number = IntField(required=True)
-    doctors = ListField(ReferenceField(Doctor))
+    doctors = ListField(ReferenceField('Doctor'))
 
 
     def get_patient_doctors(self):
