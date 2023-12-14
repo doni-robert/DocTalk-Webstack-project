@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """ The User module"""
-
-from mongoengine import Document, StringField, EmailField, IntField, ListField, ReferenceField
-
+from doctor import Doctor
+from patient import Patient
+from mongoengine import Document, StringField, EmailField
 
 class User(Document):
     """
@@ -61,21 +61,3 @@ class User(Document):
 
     # def check_password():
 
-    
-
-
-class Doctor(User):
-    """
-    The Doctor document that inherits from User
-    """
-    staff_number = IntField(required=True)
-    patients = ListField(ReferenceField('Patient')) #patient set as string to refer to a class defined later
-
-    
-
-class Patient(User):
-    """
-    The Patient document that inherits from User
-    """
-    patient_number = IntField(required=True)
-    doctors = ListField(ReferenceField(Doctor))

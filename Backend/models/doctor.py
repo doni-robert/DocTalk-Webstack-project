@@ -11,3 +11,22 @@ class Doctor(User):
     """
     staff_number = IntField(required=True)
     patients = ListField(ReferenceField(Patient))
+
+
+    def get_patients(self):
+        """Retrieves a list of a doctor's patients"""
+        return self.patients
+    
+    def add_doctor_patients(self, patient):
+        """Adds a patient to the list of a doctor's patients """
+        if patient in Patient.objects().all():
+            self.patients.append(patient)
+        else:
+            return None
+        
+    def remove_doctor_patients(self, patient):
+        """Remove a patient from the list of a doctor's patients """
+        if patient in self.patients:
+            self.patients.remove(patient)
+        else:
+            return None
