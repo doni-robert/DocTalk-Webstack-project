@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SignUp from "./Signup";
+import SignUp from "./Signup"; // Assuming SignUp.js is in the same directory
 
 const Navbar = ({ loggedIn, email, onLogout }) => {
   const [showSignup, setShowSignup] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = ({ loggedIn, email, onLogout }) => {
               Login
             </Link>
             <button onClick={onSignupClick} className="text-white">
-              SignUp
+              Sign Up
             </button>
           </>
         ) : (
@@ -54,8 +54,6 @@ const Navbar = ({ loggedIn, email, onLogout }) => {
 };
 
 export default Navbar;
-
-
 
 
 

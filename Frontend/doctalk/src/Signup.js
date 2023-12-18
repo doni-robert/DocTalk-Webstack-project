@@ -16,13 +16,11 @@ function SignUp() {
 
     const { username, email, password, confirmPassword } = formData;
 
-    // Check if all fields are filled
     if (!username || !email || !password || !confirmPassword) {
       setErrorMessages({ message: "Please fill in all fields." });
     } else if (password !== confirmPassword) {
       setErrorMessages({ message: "Passwords do not match." });
     } else {
-      // Proceed with signup
       setIsSubmitted(true);
     }
   };
@@ -37,57 +35,60 @@ function SignUp() {
   };
 
   const renderForm = (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow-md w-80">
+      <h2 className="text-lg font-semibold mb-4">Sign Up</h2>
       <div className="input-container">
-        <label>Username</label>
         <input
           type="text"
+          placeholder="Username"
           name="username"
           value={formData.username}
           onChange={handleInputChange}
-          required
+          className="h-10 border border-gray-300 px-2"
         />
       </div>
       <div className="input-container">
-        <label>Email</label>
         <input
           type="email"
+          placeholder="Email"
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          required
+          className="h-10 border border-gray-300 px-2"
         />
       </div>
       <div className="input-container">
-        <label>Password</label>
         <input
           type="password"
+          placeholder="Password"
           name="password"
           value={formData.password}
           onChange={handleInputChange}
-          required
+          className="h-10 border border-gray-300 px-2"
         />
       </div>
       <div className="input-container">
-        <label>Confirm Password</label>
         <input
           type="password"
+          placeholder="Confirm Password"
           name="confirmPassword"
           value={formData.confirmPassword}
           onChange={handleInputChange}
-          required
+          className="h-10 border border-gray-300 px-2"
         />
       </div>
-      <div className="button-container">
-        <input type="submit" value="Sign Up" />
-      </div>
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        Sign Up
+      </button>
       {renderErrorMessage()}
     </form>
   );
 
   return (
-    <div className="signup-form">
-      <div className="title">SignUp</div>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       {isSubmitted ? (
         <div>User is successfully signed up!</div>
       ) : (
@@ -98,3 +99,4 @@ function SignUp() {
 }
 
 export default SignUp;
+
