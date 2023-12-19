@@ -42,6 +42,7 @@ const Navbar = ({ loggedIn, email, onLogout }) => {
         )}
       </div>
       {showSignup && (
+        
         <div className="absolute flex item-center top-16 right-4 bg-white p-6 rounded shadow-md w-80">
           <SignUp /> {/* Replacing the previous signup form with SignUp component */}
           <button onClick={closeSignup} className="text-sm text-blue-500 underline mt-4">
@@ -54,6 +55,5 @@ const Navbar = ({ loggedIn, email, onLogout }) => {
 };
 
 export default Navbar;
-
 
 

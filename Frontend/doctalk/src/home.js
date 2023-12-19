@@ -1,5 +1,5 @@
 import React from "react";
-import backgroundImage from "./assets/loginimg.jpg"; 
+import backgroundImage from "./assets/doctor-patient.jpg"; 
 
 const Home = () => {
     return (

@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./home";
 import Login from './Login';
 import Navbar from './Navbar';
+import Signup from './Signup';
+import footer from './footer';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/footer" element={<footer />} />
         </Routes> 
       </BrowserRouter>
     </div>
