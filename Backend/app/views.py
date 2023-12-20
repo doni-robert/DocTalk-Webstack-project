@@ -31,7 +31,7 @@ def register():
         if User.create_user(email, username, password):
             return make_response(jsonify({"message": "User created successfuly"}), 201)
         
-    return make_response(jsonify({"message": "GET successfuly"}), 201)
+    return make_response(jsonify({"message": "Not a POST request"}), 201)
 
 
 @app.route('/login', methods=['GET', 'POST'])
