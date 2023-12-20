@@ -2,10 +2,10 @@
 """ Handles different routes for the app """
 
 from app import app
-from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
-from app.forms import RegistrationForm, LoginForm
+from flask import render_template, request, jsonify, make_response
 from models.user import User
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token,create_refresh_token
 
 @app.route('/')
 @app.route('/index')
@@ -23,25 +23,35 @@ def register():
 
         username = data.get("username")
         email = data.get('email')
-        password = data.get('password')
+        password = generate_password_hash(data.get('password'))
 
         if User.get_user_by_email(email):
             return jsonify({"message": f"User with email {email} already exists"})
         
-        if User.create_user(email, username, password):
-            return make_response(jsonify({"message": "User created successfuly"}), 201)
+        User.create_user(email, username, password)
+        return make_response(jsonify({"message": "User created successfuly"}), 201)
         
     return make_response(jsonify({"message": "Not a POST request"}), 201)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """ Return the login page """
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.email.data == 'xhD2U@example.com' and form.password.data == 'password':
-            flash('You\'re logged in!')
-            return redirect(url_for('index'))
+    """ Logs in an existing user """
+    if request.method == 'POST':
+        data = request.get_json()
+
+        email = data.get('email')
+        password = data.get('password')
+
+        user = User.get_user_by_email(email)
+        if user and check_password_hash(user.password, password):
+            access_token = create_access_token(identity=user.name)
+            refresh_token = create_refresh_token(identity=user.name)
+
+            return jsonify(
+                {"access_token": access_token, "refresh_token": refresh_token}
+            )
+
         else:
-            flash('Login Unsuccessful. Incorrect username or password')
-    return render_template('login.html', title='Login', form=form)
+            return jsonify({"message": "Invalid username or password"})
+    return make_response(jsonify({"message": "Not a POST request"}), 201)
