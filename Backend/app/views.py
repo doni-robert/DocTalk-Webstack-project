@@ -2,8 +2,9 @@
 """ Handles different routes for the app """
 
 from app import app
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request, jsonify, make_response
 from app.forms import RegistrationForm, LoginForm
+from models.user import User
 
 
 @app.route('/')
@@ -16,12 +17,21 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    """ Return the register page """
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!')
-        return redirect(url_for('index'))
-    return render_template('register.html', title='Register', form=form)
+    """ Registers a new user """
+    if request.method == 'POST':
+        data = request.get_json()
+
+        username = data.get("username")
+        email = data.get('email')
+        password = data.get('password')
+
+        if User.get_user_by_email(email):
+            return jsonify({"message": f"User with email {email} already exists"})
+        
+        if User.create_user(email, username, password):
+            return make_response(jsonify({"message": "User created successfuly"}), 201)
+        
+    return make_response(jsonify({"message": "GET successfuly"}), 201)
 
 
 @app.route('/login', methods=['GET', 'POST'])
