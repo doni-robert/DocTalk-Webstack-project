@@ -29,13 +29,12 @@ function SignUp() {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const renderErrorMessage = () => {
     return <div className="error">{errorMessages.message}</div>;
   };
 
   const renderForm = (
-    <form onSubmit={handleSubmit} className=" p-6 bg-white rounded font-serif w-80 h-100vh">
+    <form onSubmit={handleSubmit} className=" p-6 shadow bg-white rounded font-serif w-80 h-auto mt-10">
       <h2 className="text-lg font-semibold mb-4">Sign Up</h2>
       <div className="input-container">
         <input
@@ -79,7 +78,7 @@ function SignUp() {
       </div>
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        className="bg-sky-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
       >
         Sign Up
       </button>
@@ -99,4 +98,5 @@ function SignUp() {
 }
 
 export default SignUp;
+
 

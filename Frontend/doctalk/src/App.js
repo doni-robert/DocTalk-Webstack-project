@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Switch } from 'react-router-dom';
 import Home from "./home";
 import Login from './Login';
 import Navbar from './Navbar';
@@ -41,7 +41,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup"  element={<Signup /> } />
           <Route path="/footer" element={<footer />} />
         </Routes> 
       </BrowserRouter>
