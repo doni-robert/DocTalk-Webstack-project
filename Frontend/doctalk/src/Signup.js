@@ -34,7 +34,8 @@ function SignUp() {
   };
 
   const renderForm = (
-    <form onSubmit={handleSubmit} className=" p-6 shadow bg-white rounded font-serif w-80 h-auto mt-10">
+ <div className="flex justify-center items-center h-screen">
+    <form onSubmit={handleSubmit} className=" p-6 shadow-lg bg-white rounded font-serif w-80 h-auto">
       <h2 className="text-lg font-semibold mb-4">Sign Up</h2>
       <div className="input-container">
         <input
@@ -76,14 +77,17 @@ function SignUp() {
           className="h-10 border border-gray-300 px-2"
         />
       </div>
+      <div className="flex justify-center">
       <button
         type="submit"
         className="bg-sky-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
       >
-        Sign Up
+        Submit
       </button>
       {renderErrorMessage()}
+      </div>
     </form>
+    </div>
   );
 
   return (
