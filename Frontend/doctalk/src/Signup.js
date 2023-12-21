@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -20,9 +21,21 @@ function SignUp() {
       setErrorMessages({ message: "Please fill in all fields." });
     } else if (password !== confirmPassword) {
       setErrorMessages({ message: "Passwords do not match." });
+
     } else {
-      setIsSubmitted(true);
-    }
+        // Send form data to the server using Axios
+        axios.post('http://your-flask-server-address:port/signup', formData)
+          .then(response => {
+            // Handle successful response
+            console.log('You have successfully signed up!!:', response.data);
+            setIsSubmitted(true); // Update state to show success message
+          })
+          .catch(error => {
+            // Handle error
+            console.error('Signup error:', error);
+            // You can set error messages or perform other error handling here
+          });
+      }
   };
 
   const handleInputChange = (event) => {
@@ -80,7 +93,7 @@ function SignUp() {
       <div className="flex justify-center">
       <button
         type="submit"
-        className="bg-sky-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        className="bg-teal-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
       >
         Submit
       </button>
