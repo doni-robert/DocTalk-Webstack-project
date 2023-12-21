@@ -7,5 +7,8 @@ def init_mongodb(app):
     """
     Database initialization
     """
-    db_uri = app.config['DB_HOST']
-    connect(host=db_uri)
+    try:
+        db_uri = app.config['DB_HOST']
+        connect(host=db_uri, uuidRepresentation='standard')
+    except Exception as e:
+        raise e

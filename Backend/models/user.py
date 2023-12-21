@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """ The User module"""
-
-from mongoengine import Document, StringField, EmailField, IntField, ListField, ReferenceField
-
+from mongoengine import Document, StringField, EmailField
 
 class User(Document):
     """
@@ -15,6 +13,45 @@ class User(Document):
 
     meta = {'allow_inheritance': True}
 
+
+    @staticmethod
+    def is_authenticated():
+        """ Checks whether a user is authenticated"""
+        return True
+
+    @staticmethod
+    def is_active():
+        """ Checks whether a user is active """
+        return True
+    
+    def get_user_by_email(email):
+        """ Retrieves a user based on an email"""
+        if email:
+            user = User.objects(email=email).first()
+
+            return user
+        
+    def create_user(email, name, password):
+        """ Creates and adds a new user to the database """
+        new_user = User(email=email, name=name, password=password)
+        new_user.save()
+
+        return new_user
+    
+    def get_contacts(self):
+        """ Retrieves the relevant contacts for a user"""
+        from models.doctor import Doctor
+        from models.patient import Patient
+
+        if isinstance(self, Doctor):
+            return self.patients
+        
+        if isinstance(self, Patient):
+            return self.doctors
+
+
+
+
     # Possible methods
 
     # def create_user():
@@ -25,19 +62,3 @@ class User(Document):
 
     # def check_password():
 
-    
-
-
-class Doctor(User):
-    """
-    The Doctor document that inherits from User
-    """
-    staff_number = IntField(required=True)
-    patients = ListField(ReferenceField('Patient')) #patient set as string to refer to a class defined later
-
-class Patient(User):
-    """
-    The Patient document that inherits from User
-    """
-    patient_number = IntField(required=True)
-    doctors = ListField(ReferenceField(Doctor))
