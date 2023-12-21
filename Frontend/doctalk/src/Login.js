@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import axios from 'axios';
 
 import "./Login.css";
 
@@ -28,24 +29,24 @@ function App() {
   const handleSubmit = (event) => {
     //Prevent page reload
     event.preventDefault();
+    const formData = new FormData(event.target);
+    const userData = {
+      username: formData.get('uname'),
+      password: formData.get('pass')
+    };
 
-    var { uname, pass } = document.forms[0];
-
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
+    // Send user credentials to the server for login
+    axios.post('http://your-flask-server-address:port/login', userData)
+      .then(response => {
+        // Handle successful login response
+        console.log('User logged in:', response.data);
+        setIsSubmitted(true); // Update state to show success message
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Login error:', error);
+        // You can set error messages or perform other error handling here
+      });
   };
 
   // Generate JSX code for error message

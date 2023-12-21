@@ -1,8 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, } from 'react-router-dom';
 import Home from "./home";
 import Login from './Login';
 import Navbar from './Navbar';
 import Signup from './Signup';
+import axios from 'axios';
 import footer from './footer';
 import { useEffect, useState } from 'react';
 
@@ -41,7 +42,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup"  element={<Signup /> } />
           <Route path="/footer" element={<footer />} />
         </Routes> 
       </BrowserRouter>

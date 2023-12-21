@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SignUp from "./Signup"; // Assuming SignUp.js is in the same directory
+import SignUp from "./Signup";
 
 const Navbar = ({ loggedIn, email, onLogout }) => {
   const [showSignup, setShowSignup] = useState(false);
   const navigate = useNavigate();
 
   const onSignupClick = () => {
-    setShowSignup(true);
+    navigate('/signup');
   };
 
   const closeSignup = () => {
