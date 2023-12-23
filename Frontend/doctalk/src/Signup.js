@@ -24,7 +24,7 @@ function SignUp() {
 
     } else {
         // Send form data to the server using Axios
-        axios.post('http://your-flask-server-address:port/signup', formData)
+        axios.post('http://127.0.0.1:5000/register', formData)
           .then(response => {
             // Handle successful response
             console.log('You have successfully signed up!!:', response.data);

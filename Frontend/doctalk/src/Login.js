@@ -36,7 +36,7 @@ function App() {
     };
 
     // Send user credentials to the server for login
-    axios.post('http://your-flask-server-address:port/login', userData)
+    axios.post('http://127.0.0.1/login', userData)
       .then(response => {
         // Handle successful login response
         console.log('User logged in:', response.data);
