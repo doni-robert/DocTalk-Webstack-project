@@ -8,8 +8,8 @@ class User(Document):
     The User base model
     """
     email = EmailField(required=True, unique=True)
-    name = StringField(max_length=50)
-    password = StringField(max_length=255)
+    username = StringField(max_length=50, required=True)
+    password = StringField(max_length=255, required=True)
 
     meta = {'allow_inheritance': True}
 
@@ -32,7 +32,7 @@ class User(Document):
 
     def create_user(email, name, password):
         """ Creates and adds a new user to the database """
-        new_user = User(email=email, name=name, password=password)
+        new_user = User(email=email, username=name, password=password)
         new_user.save()
 
         return new_user
