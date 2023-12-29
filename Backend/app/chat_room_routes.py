@@ -5,6 +5,7 @@ from flask import Blueprint, request, jsonify, make_response
 from functools import wraps
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from datetime import datetime
+from models.user import User
 from models.chat_room import ChatRoom
 from models.chat_message import ChatMessage
 
@@ -35,12 +36,12 @@ def create_room(current_user):
 
     if ChatRoom.get_room_by_name(room_name):
         return make_response(
-            jsonify({"message": "Room name already exists"}),
+            jsonify({"message": "Room already exists"}),
             400)
 
     new_room = ChatRoom.create_room(room_name, current_user)
     return make_response(
-        jsonify({"message": f"Room {room_name} created successfuly"}),
+        jsonify({"message": "Room {room_name} created successfuly"}),
         201)
 
 
@@ -105,7 +106,7 @@ def delete_room(current_user):
 def get_rooms():
     """ Gets all chat rooms """
     rooms = ChatRoom.objects
-    rooms_list = [room.to_mongo().to_dict() for room in rooms]
+    rooms_list = [room.room_name for room in rooms]
     return make_response(jsonify(rooms_list), 200)
 
 
@@ -115,11 +116,11 @@ def add_user(current_user):
     """ add a user to a room """
     data = request.get_json()
 
-    user_id = data.get('user_id')
+    username = data.get('username')
     room_name = data.get('room_name')
-    if not user_id or not room_name:
+    if not username or not room_name:
         return make_response(
-            jsonify({"message": "Missing user_id or room_name"}),
+            jsonify({"message": "Missing username or room name"}),
             400)
 
     room = ChatRoom.get_room_by_name(room_name)
@@ -128,11 +129,13 @@ def add_user(current_user):
             jsonify({"message": "Room not found"}),
             404)
 
-    room.users.append(user_id)
+    # Get the User document that corresponds to the username
+    user = User.objects.get(username=username)
+    room.users.append(user)
     room.save()
 
     return make_response(
-        jsonify({"message": f"User {user_id} added to room {room_name}"}),
+        jsonify({"message": f"User {username} added to room {room_name}"}),
         200)
 
 
@@ -142,11 +145,11 @@ def remove_user(current_user):
     """ remove a user from a room """
     data = request.get_json()
 
-    user_id = data.get('user_id')
+    username = data.get('username')
     room_name = data.get('room_name')
-    if not user_id or not room_name:
+    if not username or not room_name:
         return make_response(
-            jsonify({"message": "Missing user_id or room_name"}),
+            jsonify({"message": "Missing username or room name"}),
             400)
 
     room = ChatRoom.get_room_by_name(room_name)
@@ -155,9 +158,11 @@ def remove_user(current_user):
             jsonify({"message": "Room not found"}),
             404)
 
-    room.users.remove(user_id)
+    # Get the User document that corresponds to the username
+    user = User.objects.get(username=username)
+    user.delete()
     room.save()
 
     return make_response(
-        jsonify({"message": f"User {user_id} removed from room {room_name}"}),
+        jsonify({"message": f"User {username} removed from room {room_name}"}),
         200)
