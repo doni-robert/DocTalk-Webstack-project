@@ -7,7 +7,6 @@ from functools import wraps
 from datetime import datetime
 from models.chat_message import ChatMessage
 from models.chat_room import ChatRoom
-from models.user import User
 
 chats_bp = Blueprint('chat_message_routes', __name__, url_prefix='/chats')
 
@@ -44,13 +43,15 @@ def send_message(current_user):
             jsonify({"message": "Room not found"}),
             404)
 
-    receiver = User.get_user_by_name(receiver_name)
+    receiver = ChatRoom.get_user_by_name(receiver_name)
     if not receiver:
         return make_response(
             jsonify({"message": "Receiver not found"}),
             404)
 
-    new_message = ChatMessage.create_message(message, current_user, receiver, room)
+    new_message = ChatMessage.create_message(message,
+                                             current_user,
+                                             receiver, room)
     return make_response(
         jsonify({"message": "Message sent successfuly"}),
         201)
@@ -64,7 +65,7 @@ def get_messages(current_user, chat_room_name):
     room = ChatRoom.get_room_by_name(chat_room_name)
     if room is None or current_user not in room.users:
         return make_response(
-            jsonify({"message": f"Room not found or user not in room"}),
+            jsonify({"message": "Room not found or user not in room"}),
             404)
 
     # get all messages from the chat room
@@ -83,7 +84,7 @@ def update(current_user, message_id):
     message = ChatMessage.objects(id=message_id).first()
     if message is None or message.sender != current_user:
         return make_response(
-            jsonify({"message": f"Message not found or not from user"}),
+            jsonify({"message": "Message not found or not from user"}),
             404)
 
     # update the message
@@ -93,7 +94,7 @@ def update(current_user, message_id):
     message.save()
 
     # send the updated message back
-    return jsonify({"message": f"Message updated successfuly"}), 200
+    return jsonify({"message": "Message updated successfuly"}), 200
 
 
 @chats_bp.route('/delete/<message_id>', methods=['DELETE'])
@@ -104,7 +105,7 @@ def delete(current_user, message_id):
     message = ChatMessage.objects(id=message_id).first()
     if message is None or message.sender != current_user:
         return make_response(
-            jsonify({"message": f"Message not found or not from user"}),
+            jsonify({"message": "Message not found or not from user"}),
             404)
 
     # delete the message
@@ -112,4 +113,4 @@ def delete(current_user, message_id):
     message.save()
 
     # return success message
-    return jsonify({"message": f"Message deleted successfully"}), 200
+    return jsonify({"message": "Message deleted successfully"}), 200
