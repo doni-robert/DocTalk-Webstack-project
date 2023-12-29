@@ -48,6 +48,17 @@ class User(Document):
         if isinstance(self, Patient):
             return self.doctors
 
-    # Possible methods
-    # def is_anonymous():
-    # def authenticate_user():
+    def remove_user(self):
+        """ Removes a user from the database """
+        self.delete()
+
+    def is_anonymous():
+        """ Checks whether a user is anonymous """
+        return False
+
+    def authenticate_user(email, password):
+        """ Authenticates a user """
+        user = User.get_user_by_email(email)
+        if user and user.password == password:
+            return user
+        return None
