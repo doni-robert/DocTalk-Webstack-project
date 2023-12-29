@@ -32,7 +32,7 @@ def register():
 
     new_user = User.create_user(email, username, password)
     return make_response(
-            jsonify({"message": f"User created successfuly"}),
+            jsonify({"message": "User created successfuly"}),
             201)
 
 
@@ -46,8 +46,8 @@ def login():
 
     user = User.get_user_by_email(email)
     if user and check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.name)
-        refresh_token = create_refresh_token(identity=user.name)
+        access_token = create_access_token(identity=user.username)
+        refresh_token = create_refresh_token(identity=user.username)
 
         return jsonify(
             {"access_token": access_token, "refresh_token": refresh_token}
