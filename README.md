@@ -11,7 +11,7 @@ The ALX Holberton Software Engineering programme is a 12-month(70h/week) immersi
 
 1.[Kennedy Onyango](https://github.com/Kennedy826) - Frontend Developer
 
-2.[Robert Ndung'](https://github.com/doni-robert) - Backend Developer
+2.[Robert Ndung'u](https://github.com/doni-robert) - Backend Developer
 
 3.[Rehema Owino](https://github.com/R-Owino) - Backend Developer
 
