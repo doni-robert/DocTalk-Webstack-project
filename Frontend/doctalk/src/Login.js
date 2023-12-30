@@ -36,7 +36,7 @@ function App() {
     };
 
     // Send user credentials to the server for login
-    axios.post('http://127.0.0.1/login', userData)
+    axios.post('http://127.0.0.1:5000/auth/login', userData)
       .then(response => {
         // Handle successful login response
         console.log('User logged in:', response.data);

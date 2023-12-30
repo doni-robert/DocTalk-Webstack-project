@@ -40,7 +40,7 @@ def login():
     if request.method == 'POST':
         data = request.get_json()
 
-        email = data.get('email')
+        email = data.get('username')
         password = data.get('password')
 
         user = User.get_user_by_email(email)
