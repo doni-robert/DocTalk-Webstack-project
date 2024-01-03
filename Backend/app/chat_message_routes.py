@@ -76,7 +76,7 @@ def get_messages(current_user, chat_room_name):
         {"messages": [message.to_dict() for message in messages]}), 200
 
 
-@chats_bp.route('/update/<message_id>', methods=['POST'])
+@chats_bp.route('/update/<message_id>', methods=['PUT'])
 @logged_in
 def update(current_user, message_id):
     """ Updates a message in a chat room """
