@@ -19,20 +19,21 @@ def register():
 
     username = data.get("username")
     email = data.get("email")
-    password = generate_password_hash(data.get("password"))
+    password = data.get("password")
 
     if not username or not email or not password:
         return make_response(
             jsonify({"message": "Missing username, email or password"}),
             400)
+    password = generate_password_hash(password)
 
     if User.get_user_by_email(email):
-        return jsonify(
-            {"message": f"User with email {email} already exists"})
+        return make_response(jsonify(
+            {"message": f"User with email {email} already exists"}), 400)
 
     new_user = User.create_user(email, username, password)
     return make_response(
-            jsonify({"message": "User created successfuly"}),
+            jsonify({"message": "User created successfully"}),
             201)
 
 
@@ -45,16 +46,19 @@ def login():
     password = data.get('password')
 
     user = User.get_user_by_email(email)
-    if user and check_password_hash(user.password, password):
+    if user and user.password and check_password_hash(user.password, password):
         access_token = create_access_token(identity=user.username)
         refresh_token = create_refresh_token(identity=user.username)
 
-        return jsonify(
-            {"access_token": access_token, "refresh_token": refresh_token}
-        )
+        return make_response(jsonify(
+            {"message": "Login successful",
+             "access_token": access_token,
+             "refresh_token": refresh_token}
+        ), 200)
 
     else:
-        return jsonify({"message": "Invalid username or password"})
+        return make_response(
+            jsonify({"message": "Invalid username or password"}), 400)
 
 
 @bp.route('/logout', methods=['GET'])
