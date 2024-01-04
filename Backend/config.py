@@ -2,10 +2,16 @@
 """ Configuration file """
 
 import os
+from datetime import timedelta
 
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY', 'xyzxyz xyzxyz xyzxyz')
+    JWT_TOKEN_LOCATION = ['headers']
+    JWT_HEADER_NAME = 'Authorization'
+    JWT_HEADER_TYPE = 'Bearer'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=7)
 
 
 class DevConfig(Config):
