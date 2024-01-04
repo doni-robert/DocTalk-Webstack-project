@@ -13,6 +13,15 @@ chats_bp = Blueprint('chat_message_routes', __name__, url_prefix='/chats')
 
 # user must be logged in to chat
 def logged_in(func):
+    """
+    Decorator function that checks if a user is logged in.
+    
+    Parameters:
+    - func: The function to be decorated.
+    
+    Returns:
+    - wrapper: The decorated function.
+    """
     @wraps(func)
     @jwt_required()
     def wrapper(*args, **kwargs):
@@ -22,7 +31,7 @@ def logged_in(func):
 
 
 @chats_bp.route('/send_message', methods=['POST'])
-@logged_in
+@jwt_required()
 def send_message(current_user):
     """ Sends a message to a chat room """
     data = request.get_json()
@@ -58,7 +67,7 @@ def send_message(current_user):
 
 
 @chats_bp.route('/get_messages/<chat_room_name>', methods=['GET'])
-@logged_in
+@jwt_required()
 def get_messages(current_user, chat_room_name):
     """ Gets all messages from a chat room """
     # check if chatroom exists and the user is part of it
@@ -77,7 +86,7 @@ def get_messages(current_user, chat_room_name):
 
 
 @chats_bp.route('/update/<message_id>', methods=['PUT'])
-@logged_in
+@jwt_required()
 def update(current_user, message_id):
     """ Updates a message in a chat room """
     # check if user exists and the message is from them
@@ -98,7 +107,7 @@ def update(current_user, message_id):
 
 
 @chats_bp.route('/delete/<message_id>', methods=['DELETE'])
-@logged_in
+@jwt_required()
 def delete(current_user, message_id):
     """ Deletes a message in a chat room """
     # check if user exists and the message is from them
