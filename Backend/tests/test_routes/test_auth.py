@@ -10,7 +10,7 @@ from . import BaseTestCase
 class TestAuth(BaseTestCase):
     """ Tests for user authentication routes"""
 
-    # Tests for /register/ route
+    """ ------- Tests for /register/ route -------"""
     @patch.object(User, 'create_user')
     def test_register_success(self, mock_create_user):
         """ Tests User Registration Action """
@@ -52,7 +52,7 @@ class TestAuth(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.get_json(), {"message": "Missing username, email or password"})
 
-    # Tests for /login/ route
+    """ ------- Tests for /login/ route -------"""
     @patch.object(User, 'get_user_by_email')
     @patch('werkzeug.security.check_password_hash')
     def test_login_success(self, mock_check_password_hash, mock_get_user_by_email):
@@ -103,7 +103,7 @@ class TestAuth(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.get_json(), {"message": "Invalid username or password"})
 
-    # Tests for /logout route
+    """ ------- Tests for /logout/ route -------"""
     def test_logout_success(self):
         """ Test for successful logout """
         response = self.client.get('/auth/logout')
