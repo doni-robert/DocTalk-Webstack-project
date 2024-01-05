@@ -3,35 +3,12 @@
 
 import unittest
 from unittest.mock import patch
-from flask import Flask
-from config import TestConfig
-from db import init_mongodb
 from app.auth import *
-from app.auth import bp as auth_bp
-from mongoengine.connection import get_db
+from . import BaseTestCase
 
 
-def clear_db():
-    """ Clears test_db before each test run """
-    db = get_db()
-    for collection in db.list_collection_names():
-        if not collection.startswith("system."):
-            db.drop_collection(collection)
-
-
-class TestAuth(unittest.TestCase):
+class TestAuth(BaseTestCase):
     """ Tests for user authentication routes"""
-    def setUp(self):
-        """ Sets up the test client and initializes the database"""
-        self.app = Flask(__name__)
-        self.app.config.from_object(TestConfig)
-        self.client = self.app.test_client()
-
-        self.app.register_blueprint(auth_bp)
-
-        with self.app.app_context():
-            init_mongodb(self.app)
-            clear_db()
 
     # Tests for /register/ route
     @patch.object(User, 'create_user')
@@ -82,18 +59,34 @@ class TestAuth(unittest.TestCase):
         """ Tests User Login Action """
         mock_check_password_hash.return_value = True
         mock_user = User()
-        mock_user.password = 'mock_password'
+        mock_user.password = 'scrypt:32768:8:1$kKffHgKnFebre5af$d0475c61e82a0552253bfe2e8a8ab358f7b7bc03a72286f13eb6703353bafb26358b37bdfd3c59c224c3046fdb8c009d4cccb63ff7824b3846216abcdc9269d9'
         mock_get_user_by_email.return_value = mock_user
 
-        response = self.client.post('/auth/login/', json={
-            "email": "testuser.example.com",
-            "password": "testpassword"
-        })
+        # mock access and refresh tokens
+        mock_access_token = '<mocked access token>'
+        mock_refresh_token = '<mocked refresh token>'
+
+        # patch create_access_token and create_refresh_token functions
+        with patch('app.auth.create_access_token') as mock_create_access_token, \
+                patch('app.auth.create_refresh_token') as mock_create_refresh_token:
+            mock_create_access_token.return_value = mock_access_token
+            mock_create_refresh_token.return_value = mock_refresh_token
+            response = self.client.post('/auth/login/', json={
+                "email": "testuser.example.com",
+                "password": "testpassword"
+            })
+
+        # print(response.get_json())
+        # print(mock_get_user_by_email.return_value)
+        # print(mock_user)
+        # print(mock_user.password)
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.get_json(), {"message": "Login successful"})
-        self.assertEqual(response.get_json()['access_token'], '<mocked access token>')
-        self.assertEqual(response.get_json()['refresh_token'], '<mocked refresh token>')
+        self.assertEqual(response.get_json(), {
+            "access_token": mock_access_token,
+            "message": "Login successful",
+            "refresh_token": mock_refresh_token
+        })
 
     @patch.object(User, 'get_user_by_email')
     @patch('werkzeug.security.check_password_hash')
