@@ -31,7 +31,7 @@ def logged_in(func):
 
 
 @chats_bp.route('/send_message', methods=['POST'])
-@jwt_required()
+@logged_in
 def send_message(current_user):
     """ Sends a message to a chat room """
     data = request.get_json()
@@ -62,12 +62,12 @@ def send_message(current_user):
                                              current_user,
                                              receiver, room)
     return make_response(
-        jsonify({"message": "Message sent successfuly"}),
+        jsonify({"message": "Message sent successfuly"}, new_message),
         201)
 
 
 @chats_bp.route('/get_messages/<chat_room_name>', methods=['GET'])
-@jwt_required()
+@logged_in
 def get_messages(current_user, chat_room_name):
     """ Gets all messages from a chat room """
     # check if chatroom exists and the user is part of it
@@ -86,7 +86,7 @@ def get_messages(current_user, chat_room_name):
 
 
 @chats_bp.route('/update/<message_id>', methods=['PUT'])
-@jwt_required()
+@logged_in
 def update(current_user, message_id):
     """ Updates a message in a chat room """
     # check if user exists and the message is from them
@@ -107,7 +107,7 @@ def update(current_user, message_id):
 
 
 @chats_bp.route('/delete/<message_id>', methods=['DELETE'])
-@jwt_required()
+@logged_in
 def delete(current_user, message_id):
     """ Deletes a message in a chat room """
     # check if user exists and the message is from them
