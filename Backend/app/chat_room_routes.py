@@ -14,6 +14,15 @@ room_bp = Blueprint('chat_room_routes', __name__, url_prefix='/rooms')
 
 # user must be logged in to access chatrooms
 def logged_in(func):
+    """
+    Decorator function that checks if a user is logged in.
+    
+    Parameters:
+    - func: The function to be decorated.
+    
+    Returns:
+    - wrapper: The decorated function.
+    """
     @wraps(func)
     @jwt_required()
     def wrapper(*args, **kwargs):
@@ -41,11 +50,11 @@ def create_room(current_user):
 
     new_room = ChatRoom.create_room(room_name, current_user)
     return make_response(
-        jsonify({"message": "Room {room_name} created successfuly"}),
+        jsonify({"message": f"Room {room_name} created successfully"}),
         201)
 
 
-@room_bp.route('/update_room', methods=['POST'])
+@room_bp.route('/update_room', methods=['PUT'])
 @logged_in
 def update_room(current_user):
     """ Updates a chat room """

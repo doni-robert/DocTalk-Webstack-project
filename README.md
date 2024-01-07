@@ -1,23 +1,29 @@
-**PROJECT DESCRIPTION**
+## DOCTALK
+<p>Web chat application aimed at enhacing communication between healthcare proffessionals and patients.
+This is the backend side</p>
 
-**FULL-STACK WEBSTACK PORTFOLIO PROJECT - DOCTALK**
+### STARTING THE PROJECT
+- Clone the repository to your local environment `git clone repo`
+- Install the dependencies, run `pip install -r requirements.txt`
+- Navigate to the backend branch `git checkout backend`
+- Navigate to the Backend folder `cd Backend`
+- Select the environment you're working with before starting the application. On the terminal, run `export FLASK_ENV=development` or `export FLASK_ENV=production`. The default environment is testing. 
+- Each environment creates its own database, make sure you're on the correct environment. The test runs clears the database when a new run is made.
+- Run `main.py`
+- To run the test modules, navigate to the Backend folder and run `python -m unittest discover` for all test modules or `python -m unittest tests/test_file.py` for a specific module
 
-**ALX_AFRICA**                                                                                                                                                                                                                                                                    
-The ALX Holberton Software Engineering programme is a 12-month(70h/week) immersive programme that engages technology enthusiasts and budding software engineers in a variety of programmes across in-demand tech disciplines to prepare them for a global career as a Full-Stack Developer. Click [here](https://www.alxafrica.com/) for more information
+### AUTHORS
+1.[Robert Ndung'u](https://github.com/doni-robert) - Backend Developer
 
-**STARTING THE PROJECT**
-
-**AUTHORS**
-
-1.[Kennedy Onyango](https://github.com/Kennedy826) - Frontend Developer
-
-2.[Robert Ndung'u](https://github.com/doni-robert) - Backend Developer
-
-3.[Rehema Owino](https://github.com/R-Owino) - Backend Developer
-
-4.[Mahbub Asifatu](https://github.com/Mirai500) - Frontend Developer
+2.[Rehema Owino](https://github.com/R-Owino) - Backend Developer
 
 
-**FRAMEWORK AND LIBRARIES**
+### FRAMEWORK AND LIBRARIES
+- Flask Framework
+- MongoEngine for the database
+- SocketIO for real time communication
+- Jason Web Tokens (JWT) for user authentication and authorization
+- Unittest for testing the modules
 
-**PROJECT LINK**
+### PROJECT LINK
+*wip*
