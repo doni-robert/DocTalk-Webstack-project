@@ -6,7 +6,9 @@ from models.user import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import (
     create_access_token,
-    create_refresh_token
+    create_refresh_token,
+    jwt_required,
+    get_jwt_identity
 )
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -61,3 +63,14 @@ def login():
 def logout():
     """ Logs out a user """
     return jsonify({"message": "Logged out successfully"})
+
+
+@bp.route("/refresh")
+@jwt_required(refresh=True)
+def refresh():
+    "Genereates a new access token"    
+    current_user = get_jwt_identity()
+
+    new_access_token = create_access_token(identity=current_user)
+
+    return make_response(jsonify({"access_token": new_access_token}), 200)
