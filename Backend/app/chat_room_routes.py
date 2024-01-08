@@ -8,7 +8,7 @@ from datetime import datetime
 from models.user import User
 from models.chat_room import ChatRoom
 from models.chat_message import ChatMessage
-from Backend.models.revoked_token import RevokedToken
+from models.revoked_token import RevokedToken
 
 room_bp = Blueprint('chat_room_routes', __name__, url_prefix='/rooms')
 
