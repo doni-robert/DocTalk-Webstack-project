@@ -72,7 +72,7 @@ def logout():
     jti = get_jwt()['jti']
 
     # Add the token JTI to the blocklist
-    RevokedToken.add_token_to_blocklist(jti)
+    print(RevokedToken.add_token_to_blocklist(jti))
 
     return jsonify({"message": "Logged out successfully"})
 

@@ -31,6 +31,7 @@ def logged_in(func):
 
          # Check if the token JTI is in the revoked tokens
         jti = get_jwt()['jti']
+        print(jti)
         if RevokedToken.is_token_blacklisted(jti):
             return jsonify({"error": "Token has been revoked. User is logged out"}), 401
         

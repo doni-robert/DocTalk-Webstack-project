@@ -26,5 +26,6 @@ class RevokedToken(Document):
     @staticmethod
     def add_token_to_blocklist(jti):
         """ Creates and saves blocked token"""
-        blocked_token = RevokedToken(jti=jti).save()
+        blocked_token = RevokedToken(jti=jti)
+        blocked_token.save()
         return blocked_token
