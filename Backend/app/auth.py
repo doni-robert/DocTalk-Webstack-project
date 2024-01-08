@@ -3,7 +3,7 @@
 
 from flask import Blueprint, request, jsonify, make_response
 from models.user import User
-from models.blocklist import TokenBlockList
+from models.revoked_token import RevokedToken
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import (
     create_access_token,
@@ -72,7 +72,7 @@ def logout():
     jti = get_jwt()['jti']
 
     # Add the token JTI to the blocklist
-    TokenBlockList.add_token_to_blocklist(jti)
+    RevokedToken.add_token_to_blocklist(jti)
 
     return jsonify({"message": "Logged out successfully"})
 
